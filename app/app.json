@@ -6,8 +6,13 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
     "android": {
-      "package": "app.frangolingo"
+      "package": "app.frangolingo",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2563eb"
+      }
     },
     "ios": {
       "supportsTablet": true,
