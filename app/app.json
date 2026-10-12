@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "FranGoLingo",
+    "slug": "frangolingo",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "android": {
+      "package": "app.frangolingo"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.frangolingo"
+    }
+  }
+}

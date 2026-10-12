@@ -1,0 +1,105 @@
+{
+  "id": "fr-a1-01-au-cafe",
+  "title": "Au café",
+  "level": "A1",
+  "language": "fr",
+  "nativeLanguage": "pt-BR",
+  "tags": ["food", "greetings"],
+  "keyVocabulary": [
+    { "word": "bonjour", "translation": "olá / bom dia" },
+    { "word": "un café", "translation": "um café" },
+    { "word": "s'il vous plaît", "translation": "por favor" },
+    { "word": "merci", "translation": "obrigado(a)" }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "line",
+      "speaker": "Serveur",
+      "text": "Bonjour, bienvenue au café!",
+      "translation": "Olá, bem-vindo ao café!",
+      "audio": "fr-a1-01-au-cafe/n1.mp3",
+      "tokens": [
+        { "t": "Bonjour", "gloss": "Olá" },
+        { "t": ",", "gloss": null },
+        { "t": "bienvenue", "gloss": "bem-vindo(a)" },
+        { "t": "au", "gloss": "no / ao" },
+        { "t": "café", "gloss": "café" },
+        { "t": "!", "gloss": null }
+      ]
+    },
+    {
+      "id": "n2",
+      "type": "line",
+      "speaker": "Client",
+      "text": "Merci! Je voudrais un café, s'il vous plaît.",
+      "translation": "Obrigado! Eu gostaria de um café, por favor.",
+      "audio": "fr-a1-01-au-cafe/n2.mp3",
+      "tokens": [
+        { "t": "Merci", "gloss": "obrigado(a)" },
+        { "t": "!", "gloss": null },
+        { "t": "Je", "gloss": "eu" },
+        { "t": "voudrais", "gloss": "gostaria" },
+        { "t": "un", "gloss": "um" },
+        { "t": "café", "gloss": "café" },
+        { "t": ",", "gloss": null },
+        { "t": "s'il", "gloss": "se (lhe)" },
+        { "t": "vous", "gloss": "você / vos" },
+        { "t": "plaît", "gloss": "agrada" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n3",
+      "type": "exercise",
+      "exerciseType": "fill_blank",
+      "prompt": "Complete a frase:",
+      "sentence": ["Je", "voudrais", "__", "café", "s'il", "vous", "plaît"],
+      "blankIndex": 2,
+      "options": ["un", "une", "le"],
+      "answer": "un",
+      "explanation": "« café » é masculino, então usa o artigo indefinido « un »."
+    },
+    {
+      "id": "n4",
+      "type": "line",
+      "speaker": "Serveur",
+      "text": "Voilà! Un café pour vous.",
+      "translation": "Aqui está! Um café para você.",
+      "audio": "fr-a1-01-au-cafe/n4.mp3",
+      "tokens": [
+        { "t": "Voilà", "gloss": "aqui está" },
+        { "t": "!", "gloss": null },
+        { "t": "Un", "gloss": "um" },
+        { "t": "café", "gloss": "café" },
+        { "t": "pour", "gloss": "para" },
+        { "t": "vous", "gloss": "você" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n5",
+      "type": "exercise",
+      "exerciseType": "comprehension",
+      "question": "O que o cliente pediu?",
+      "options": ["Um café", "A conta", "Um chá"],
+      "answer": "Um café"
+    },
+    {
+      "id": "n6",
+      "type": "line",
+      "speaker": "Client",
+      "text": "Merci beaucoup! Bonne journée!",
+      "translation": "Muito obrigado! Bom dia!",
+      "audio": "fr-a1-01-au-cafe/n6.mp3",
+      "tokens": [
+        { "t": "Merci", "gloss": "obrigado(a)" },
+        { "t": "beaucoup", "gloss": "muito" },
+        { "t": "!", "gloss": null },
+        { "t": "Bonne", "gloss": "boa" },
+        { "t": "journée", "gloss": "dia (jornada)" },
+        { "t": "!", "gloss": null }
+      ]
+    }
+  ]
+}

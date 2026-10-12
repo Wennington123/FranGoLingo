@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Áudio gerado (TTS) — reconstruível pelo pipeline
+content/audio/
+
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+*.log
+
+# Env
+.env
+.env.local
+
+# Tooling local
+.commandcode/
