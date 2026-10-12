@@ -28,6 +28,9 @@ python tools/validate_story.py --audio
 
 # gerar áudio TTS de uma história
 python tools/generate_audio.py content/stories/fr/a1/01-au-cafe.json
+
+# copiar o áudio para o bundle do app + gerar o mapa de requires
+python tools/export_app_audio.py
 ```
 
 ## App

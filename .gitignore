@@ -4,8 +4,9 @@ __pycache__/
 .venv/
 venv/
 
-# Áudio gerado (TTS) — reconstruível pelo pipeline
-content/audio/
+# Áudio gerado (TTS) — reconstruível pelo pipeline.
+# O root é ignorado; a cópia embutida em app/content/audio é versionada.
+/content/audio/
 
 # Node / Expo
 node_modules/

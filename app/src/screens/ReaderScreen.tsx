@@ -10,7 +10,8 @@ import { LineText } from "../components/LineText";
 import { Mascot } from "../components/Mascot";
 import { ProgressBar } from "../components/ProgressBar";
 import { getStory } from "../data/stories";
-import { resolveAudio, type RootStackParamList } from "../navigation";
+import { resolveAudio } from "../data/audio";
+import type { RootStackParamList } from "../navigation";
 import { useOnboarding } from "../store/onboarding";
 import { useProgress } from "../store/progress";
 import { colors, font, radius } from "../theme";
@@ -115,7 +116,7 @@ export function ReaderScreen({ route, navigation }: Props) {
           <>
             {node.speaker && <Text style={styles.speaker}>{node.speaker}</Text>}
             <LineText tokens={node.tokens} />
-            <AudioButton uri={resolveAudio(node.audio)} />
+            <AudioButton assetId={resolveAudio(node.audio)} autoPlay />
             {showTranslation ? (
               <Text style={styles.translation}>{node.translation}</Text>
             ) : (
