@@ -1,5 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useProgress } from "../store/progress";
+import { colors, font, radius } from "../theme";
 
 export function ReviewScreen() {
   const mistakes = useProgress((s) => s.mistakes);
@@ -7,7 +8,8 @@ export function ReviewScreen() {
   if (mistakes.length === 0) {
     return (
       <View style={styles.center}>
-        <Text style={styles.empty}>Nenhum erro para revisar. Bom trabalho.</Text>
+        <Text style={styles.emptyIcon}>🎉</Text>
+        <Text style={styles.empty}>Nenhum erro para revisar.</Text>
       </View>
     );
   }
@@ -29,17 +31,18 @@ export function ReviewScreen() {
 }
 
 const styles = StyleSheet.create({
-  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24 },
-  empty: { fontSize: 16, color: "#6b7280", textAlign: "center" },
-  list: { flex: 1, backgroundColor: "#fff" },
+  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, gap: 8 },
+  emptyIcon: { fontSize: 44 },
+  empty: { fontSize: 18, color: colors.textMuted, textAlign: "center", fontWeight: font.semi },
+  list: { flex: 1, backgroundColor: colors.bg },
   content: { padding: 16, gap: 12 },
   card: {
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
-    backgroundColor: "#fef2f2",
+    borderRadius: radius.md,
+    borderWidth: 2,
+    borderColor: colors.redLight,
+    backgroundColor: colors.redLight,
   },
-  story: { fontSize: 12, color: "#9ca3af" },
-  label: { fontSize: 16, color: "#111827", marginTop: 4 },
+  story: { fontSize: 12, color: colors.redDark, fontWeight: font.bold },
+  label: { fontSize: 16, color: colors.text, marginTop: 4, fontWeight: font.semi },
 });

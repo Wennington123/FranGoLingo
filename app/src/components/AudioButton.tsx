@@ -1,11 +1,8 @@
 import { useAudioPlayer } from "expo-audio";
 import { Pressable, StyleSheet, Text } from "react-native";
+import { colors, font, radius } from "../theme";
 
-type Props = {
-  uri?: string;
-};
-
-export function AudioButton({ uri }: Props) {
+export function AudioButton({ uri }: { uri?: string }) {
   const player = useAudioPlayer(uri ? { uri } : undefined);
 
   return (
@@ -17,7 +14,9 @@ export function AudioButton({ uri }: Props) {
         player.play();
       }}
     >
-      <Text style={styles.label}>{uri ? "Ouvir" : "Áudio (Fase 1)"}</Text>
+      <Text style={[styles.label, !uri && styles.labelDisabled]}>
+        {uri ? "🔊  Ouvir" : "🔈  Áudio em breve"}
+      </Text>
     </Pressable>
   );
 }
@@ -26,10 +25,11 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: 999,
-    backgroundColor: "#eef2ff",
+    borderRadius: radius.pill,
+    backgroundColor: colors.blueLight,
     alignSelf: "flex-start",
   },
-  disabled: { backgroundColor: "#f3f4f6" },
-  label: { color: "#4338ca", fontWeight: "600" },
+  disabled: { backgroundColor: colors.bgAlt },
+  label: { color: colors.blueDark, fontWeight: font.semi, fontSize: 15 },
+  labelDisabled: { color: colors.textFaint },
 });

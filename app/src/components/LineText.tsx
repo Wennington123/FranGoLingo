@@ -1,28 +1,40 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, type StyleProp, type TextStyle } from "react-native";
+import { colors, font, radius } from "../theme";
 import type { Token } from "../types";
 
-type Props = {
-  tokens: Token[];
-};
+const CLOSING = /^[,.!?;:…»)"]+$/;
 
-export function LineText({ tokens }: Props) {
+function needsSpaceBefore(token: Token, prev?: Token) {
+  if (!prev) return false;
+  if (CLOSING.test(token.t)) return false;
+  if (prev.t.endsWith("'")) return false;
+  return true;
+}
+
+export function LineText({ tokens }: { tokens: Token[] }) {
   const [selected, setSelected] = useState<Token | null>(null);
 
   return (
     <View>
       <View style={styles.row}>
         {tokens.map((tok, i) => {
-          if (tok.gloss === null) {
+          const style: StyleProp<TextStyle> = [
+            styles.text,
+            needsSpaceBefore(tok, tokens[i - 1]) ? styles.space : undefined,
+            tok.gloss ? styles.word : undefined,
+            selected === tok ? styles.wordActive : undefined,
+          ];
+          if (!tok.gloss) {
             return (
-              <Text key={i} style={styles.text}>
+              <Text key={i} style={style}>
                 {tok.t}
               </Text>
             );
           }
           return (
             <Pressable key={i} onPress={() => setSelected(tok)}>
-              <Text style={[styles.text, styles.word]}>{tok.t}</Text>
+              <Text style={style}>{tok.t}</Text>
             </Pressable>
           );
         })}
@@ -39,20 +51,18 @@ export function LineText({ tokens }: Props) {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-end",
-    gap: 6,
-  },
-  text: { fontSize: 22, color: "#1f2937" },
-  word: { color: "#2563eb", textDecorationLine: "underline" },
+  row: { flexDirection: "row", flexWrap: "wrap", alignItems: "flex-end" },
+  text: { fontSize: 24, color: colors.text, lineHeight: 36 },
+  space: { marginLeft: 7 },
+  word: { fontWeight: font.semi },
+  wordActive: { color: colors.blue, backgroundColor: colors.blueLight },
   tooltip: {
-    marginTop: 12,
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: "#111827",
+    marginTop: 14,
+    padding: 14,
+    borderRadius: radius.md,
+    backgroundColor: colors.text,
+    alignSelf: "flex-start",
   },
-  tooltipWord: { color: "#fff", fontSize: 18, fontWeight: "700" },
-  tooltipGloss: { color: "#d1d5db", fontSize: 16 },
+  tooltipWord: { color: "#FFFFFF", fontSize: 20, fontWeight: font.bold },
+  tooltipGloss: { color: colors.greenLight, fontSize: 17, marginTop: 2 },
 });

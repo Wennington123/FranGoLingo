@@ -1,8 +1,10 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { stories } from "../data/stories";
 import type { RootStackParamList } from "../navigation";
 import { useProgress } from "../store/progress";
+import { EDGE, colors, font, radius } from "../theme";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Trail">;
 
@@ -13,72 +15,84 @@ export function TrailScreen({ navigation }: Props) {
     index === 0 || completed.includes(stories[index - 1].id);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.header}>
-        <Text style={styles.stat}>HP {hearts}</Text>
-        <Text style={styles.stat}>XP {xp}</Text>
+        <Text style={styles.stat}>🔥 0</Text>
+        <Text style={styles.stat}>⚡ {xp}</Text>
+        <Text style={[styles.stat, styles.hearts]}>❤️ {hearts}</Text>
       </View>
 
-      <FlatList
-        data={stories}
-        keyExtractor={(s) => s.id}
-        contentContainerStyle={styles.list}
-        renderItem={({ item, index }) => {
+      <ScrollView contentContainerStyle={styles.path}>
+        {stories.map((story, index) => {
           const unlocked = isUnlocked(index);
-          const done = completed.includes(item.id);
-          return (
-            <Pressable
-              style={[styles.card, !unlocked && styles.locked]}
-              disabled={!unlocked}
-              onPress={() => navigation.navigate("Reader", { storyId: item.id })}
-            >
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardMeta}>
-                {item.level} · {item.language}
-                {done ? " · concluída" : unlocked ? "" : " · bloqueada"}
-              </Text>
-            </Pressable>
-          );
-        }}
-      />
+          const done = completed.includes(story.id);
+          const bg = done ? colors.yellow : unlocked ? colors.green : colors.locked;
+          const edge = done ? colors.yellowDark : unlocked ? colors.greenDark : colors.border;
+          const offset = Math.round(Math.sin(index * 1.1) * 55);
 
-      <Pressable
-        style={styles.review}
-        onPress={() => navigation.navigate("Review")}
-      >
-        <Text style={styles.reviewText}>Revisão</Text>
-      </Pressable>
-    </View>
+          return (
+            <View key={story.id} style={[styles.nodeWrap, { marginLeft: offset }]}>
+              <View style={[styles.nodeBase, { backgroundColor: edge }]}>
+                <Pressable
+                  disabled={!unlocked}
+                  onPress={() => navigation.navigate("Reader", { storyId: story.id })}
+                  style={[styles.node, { backgroundColor: bg }]}
+                >
+                  <Text style={styles.nodeIcon}>{done ? "✓" : unlocked ? "★" : "🔒"}</Text>
+                </Pressable>
+              </View>
+              <Text style={styles.nodeLabel}>{story.title}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
+
+      <View style={styles.tabbar}>
+        <View style={styles.tab}>
+          <Text style={styles.tabIcon}>🏠</Text>
+          <Text style={[styles.tabLabel, styles.tabActive]}>Lições</Text>
+        </View>
+        <Pressable style={styles.tab} onPress={() => navigation.navigate("Review")}>
+          <Text style={styles.tabIcon}>📝</Text>
+          <Text style={styles.tabLabel}>Revisão</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  screen: { flex: 1, backgroundColor: colors.bg },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f3f4f6",
+    justifyContent: "space-around",
+    paddingVertical: 14,
+    borderBottomWidth: 2,
+    borderBottomColor: colors.border,
   },
-  stat: { fontSize: 16, fontWeight: "700", color: "#111827" },
-  list: { padding: 16, gap: 12 },
-  card: {
-    padding: 18,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
-    backgroundColor: "#f9fafb",
-  },
-  locked: { opacity: 0.5 },
-  cardTitle: { fontSize: 18, fontWeight: "700", color: "#111827" },
-  cardMeta: { marginTop: 4, fontSize: 13, color: "#6b7280" },
-  review: {
-    margin: 16,
-    padding: 16,
-    borderRadius: 12,
-    backgroundColor: "#111827",
+  stat: { fontSize: 18, fontWeight: font.bold, color: colors.textMuted },
+  hearts: { color: colors.red },
+  path: { padding: 24, paddingBottom: 48, alignItems: "center", gap: 8 },
+  nodeWrap: { alignItems: "center", marginBottom: 12 },
+  nodeBase: { borderRadius: radius.pill },
+  node: {
+    width: 78,
+    height: 78,
+    borderRadius: radius.pill,
+    marginBottom: EDGE,
     alignItems: "center",
+    justifyContent: "center",
   },
-  reviewText: { color: "#fff", fontWeight: "700", fontSize: 16 },
+  nodeIcon: { fontSize: 30 },
+  nodeLabel: { marginTop: 6, fontSize: 13, color: colors.textMuted, fontWeight: font.semi },
+  tabbar: {
+    flexDirection: "row",
+    borderTopWidth: 2,
+    borderTopColor: colors.border,
+    backgroundColor: colors.bg,
+  },
+  tab: { flex: 1, alignItems: "center", paddingVertical: 10, gap: 2 },
+  tabIcon: { fontSize: 22 },
+  tabLabel: { fontSize: 12, fontWeight: font.bold, color: colors.textFaint },
+  tabActive: { color: colors.green },
 });
