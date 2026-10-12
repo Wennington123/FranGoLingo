@@ -16,9 +16,10 @@ No editor.p5js.org: criar sketch novo e colar o conteúdo de `sketch.js`.
 
 ## Como o sprite funciona
 
-- `SPRITE`: mapa de pixel art 16×16 em texto. Cada caractere = 1 pixel, via `PALETTE`.
+- `SPRITE`: mapa de pixel art (cara do frango) em texto. Cada caractere = 1 pixel, via `PALETTE`.
   Editar é só mexer nas strings (`.` = transparente).
-- `poseFor(anim, t)`: devolve a pose (deslocamento vertical, squash, piscar, bico aberto) por animação. Animação é **procedural** sobre um sprite só — sem desenhar 8 quadros à mão.
+- `poseFor(anim, t)`: devolve a pose (deslocamento vertical, squash, expressão, bico aberto) por animação. Animação é **procedural** sobre um sprite só.
+- `eyeCells(expr)`: olhos desenhados por expressão — `neutral` (2×2), `happy` (arcos `^^`), `sad` (baixos + sobrancelha diagonal), `blink` (sem olhos). Bico abre com um pixel extra abaixo do bico.
 
 ## Integração no app (importante)
 

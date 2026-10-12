@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Renderiza frames do mascote a partir de mascot/sketch.js.
+"""Renderiza frames do mascote (cara) a partir de mascot/sketch.js.
 
-Reusa o SPRITE/PALETTE do sketch e replica poseFor() para gerar:
+Reusa SPRITE/PALETTE do sketch e replica poseFor()/eyeCells() para gerar:
     mascot/preview/<anim>.png  (tira de 8 frames)
     mascot/preview/<anim>.gif  (animado)
-    mascot/preview/all.png     (as 3 animações empilhadas)
+    mascot/preview/all.png     (as 3 expressões empilhadas)
 
 Uso:
     python mascot/preview.py
@@ -22,11 +22,24 @@ SKETCH = HERE / "sketch.js"
 OUT = HERE / "preview"
 
 BG = (11, 16, 32)
-CELL = 12
+CELL = 16
 FRAMES = 8
 
 PALETTE: dict[str, tuple[int, int, int] | None] = {}
 SPRITE: list[str] = []
+
+EYE_CELLS: dict[str, list[tuple[int, int, str]]] = {
+    "happy": [(5, 4, "K"), (6, 3, "K"), (6, 5, "K"), (5, 9, "K"), (6, 8, "K"), (6, 10, "K")],
+    "sad": [
+        (6, 4, "K"), (7, 4, "K"), (6, 5, "K"), (7, 5, "K"),
+        (6, 8, "K"), (7, 8, "K"), (6, 9, "K"), (7, 9, "K"),
+        (5, 4, "K"), (4, 5, "K"), (5, 9, "K"), (4, 8, "K"),
+    ],
+    "neutral": [
+        (5, 4, "K"), (6, 4, "K"), (5, 5, "K"), (6, 5, "K"),
+        (5, 8, "K"), (6, 8, "K"), (5, 9, "K"), (6, 9, "K"),
+    ],
+}
 
 
 def parse_sketch() -> None:
@@ -54,27 +67,14 @@ def dims() -> tuple[int, int]:
 def pose_for(name: str, t: float, frame: int) -> dict:
     if name == "happy":
         hop = abs(math.sin(t * 6))
-        return {
-            "yOff": -hop * 22,
-            "squash": 0.08 if hop > 0.6 else -0.06,
-            "blink": False,
-            "beakOpen": True,
-            "shadow": 1 - hop * 0.5,
-        }
+        return {"yOff": -hop * 10, "squash": 0.08 if hop > 0.6 else -0.06, "expr": "happy", "beakOpen": True}
     if name == "sad":
-        return {
-            "yOff": 6 + math.sin(t * 1.5) * 2,
-            "squash": 0.05,
-            "blink": frame % 8 < 2,
-            "beakOpen": False,
-            "shadow": 1.1,
-        }
+        return {"yOff": 3 + math.sin(t * 1.5) * 1.5, "squash": 0.04, "expr": "sad", "beakOpen": False}
     return {
-        "yOff": math.sin(t * 2) * 2,
+        "yOff": math.sin(t * 2) * 1.5,
         "squash": 0,
-        "blink": frame % 8 == 0,
+        "expr": "blink" if frame % 9 == 0 else "neutral",
         "beakOpen": False,
-        "shadow": 1,
     }
 
 
@@ -82,42 +82,37 @@ def draw_sprite(pose) -> Image.Image:
     w, h = dims()
     img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
+
+    def cell(col, row, color):
+        d.rectangle(
+            [col * CELL, row * CELL, (col + 1) * CELL - 1, (row + 1) * CELL - 1],
+            fill=color + (255,),
+        )
+
     for row, line in enumerate(SPRITE):
         for col, ch in enumerate(line):
-            if ch == "K" and pose["blink"]:
-                continue
             color = PALETTE.get(ch)
-            if color is None:
-                continue
-            d.rectangle(
-                [col * CELL, row * CELL, (col + 1) * CELL - 1, (row + 1) * CELL - 1],
-                fill=color + (255,),
-            )
+            if color:
+                cell(col, row, color)
+
+    if pose["expr"] != "blink":
+        for row, col, ch in EYE_CELLS[pose["expr"]]:
+            cell(col, row, PALETTE[ch])
+
     if pose["beakOpen"]:
-        for col in range(12, 14):
-            d.rectangle(
-                [col * CELL, 7 * CELL, (col + 1) * CELL - 1, 8 * CELL - 1],
-                fill=PALETTE["O"] + (255,),
-            )
+        for col in range(6, 9):
+            cell(col, 10, PALETTE["O"])
+
     return img
 
 
 def render_frame(pose) -> Image.Image:
     w, h = dims()
-    canvas = max(w, h) + 60
+    canvas = max(w, h) + 40
     frame = Image.new("RGB", (canvas, canvas), BG)
-    d = ImageDraw.Draw(frame)
-
-    cx, cy = canvas // 2, canvas // 2
     sw = w * (1 + pose["squash"])
     sh = h * (1 - pose["squash"])
-
-    shadow_w = w * 0.9 * pose["shadow"]
-    d.ellipse(
-        [cx - shadow_w / 2, cy + h / 2 + 4, cx + shadow_w / 2, cy + h / 2 + 18],
-        fill=(0, 0, 0),
-    )
-
+    cx, cy = canvas / 2, canvas / 2
     sp = draw_sprite(pose).resize((max(1, round(sw)), max(1, round(sh))))
     frame.paste(sp, (round(cx - sw / 2), round(cy - sh / 2 + pose["yOff"])), sp)
     return frame
@@ -126,7 +121,7 @@ def render_frame(pose) -> Image.Image:
 def main() -> int:
     parse_sketch()
     OUT.mkdir(exist_ok=True)
-    canvas = max(dims()) + 60
+    canvas = max(dims()) + 40
 
     rows = []
     for name in ("idle", "happy", "sad"):

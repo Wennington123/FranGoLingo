@@ -53,7 +53,7 @@ export function OnboardingScreen() {
       </Pressable>
 
       <View style={styles.hero}>
-        <Mascot mode={step.mode} cell={9} />
+        <Mascot mode={step.mode} cell={11} />
       </View>
 
       <View style={styles.body}>
