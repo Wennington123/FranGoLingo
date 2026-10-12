@@ -13,6 +13,8 @@ const PALETTE = {
   P: "#f9a8d4", // bochecha
 };
 
+const OUTLINE = "#9AA6B2"; // contorno (leitura em fundo claro)
+
 // Cara (sem olhos — olhos são desenhados por expressão).
 const SPRITE = [
   "......RR........",
@@ -85,27 +87,39 @@ function eyeCells(expr) {
 // ---- Desenho -----------------------------------------------------------
 
 function drawSpriteInto(g, pose) {
+  const grid = new Map();
   for (let row = 0; row < SPRITE_H; row++) {
-    const line = SPRITE[row];
     for (let col = 0; col < SPRITE_W; col++) {
-      const color = PALETTE[line[col]];
-      if (!color) continue;
-      g.fill(color);
-      g.rect(col * CELL, row * CELL, CELL, CELL);
+      if (PALETTE[SPRITE[row][col]]) grid.set(`${row},${col}`, PALETTE[SPRITE[row][col]]);
     }
   }
-
   if (pose.expr !== "blink") {
-    for (const [row, col, color] of eyeCells(pose.expr)) {
-      g.fill(color);
-      g.rect(col * CELL, row * CELL, CELL, CELL);
-    }
+    for (const [row, col, color] of eyeCells(pose.expr)) grid.set(`${row},${col}`, color);
+  }
+  if (pose.beakOpen) {
+    for (let col = 6; col <= 8; col++) grid.set(`10,${col}`, PALETTE.O);
   }
 
-  if (pose.beakOpen) {
-    g.fill(PALETTE.O);
-    for (let col = 6; col <= 8; col++) g.rect(col * CELL, 10 * CELL, CELL, CELL);
+  const paint = (key, color) => {
+    const [row, col] = key.split(",").map(Number);
+    g.fill(color);
+    g.rect(col * CELL, row * CELL, CELL, CELL);
+  };
+
+  // contorno (leitura em fundo claro)
+  for (let row = -1; row <= SPRITE_H; row++) {
+    for (let col = -1; col <= SPRITE_W; col++) {
+      const key = `${row},${col}`;
+      if (grid.has(key)) continue;
+      const n =
+        grid.has(`${row + 1},${col}`) ||
+        grid.has(`${row - 1},${col}`) ||
+        grid.has(`${row},${col + 1}`) ||
+        grid.has(`${row},${col - 1}`);
+      if (n) paint(key, OUTLINE);
+    }
   }
+  for (const [key, color] of grid) paint(key, color);
 }
 
 function drawFace(pose) {

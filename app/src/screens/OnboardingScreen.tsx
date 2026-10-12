@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { DuoButton } from "../components/DuoButton";
 import { Mascot, type MascotMode } from "../components/Mascot";
 import { ProgressBar } from "../components/ProgressBar";
@@ -38,7 +39,7 @@ export function OnboardingScreen() {
   const next = () => (last ? finishTutorial() : setIndex(index + 1));
 
   return (
-    <View style={styles.overlay}>
+    <SafeAreaView style={styles.overlay} edges={["top", "bottom"]}>
       <View style={styles.top}>
         <View style={styles.progressWrap}>
           <ProgressBar progress={(index + 1) / STEPS.length} />
@@ -61,7 +62,7 @@ export function OnboardingScreen() {
           <DuoButton label={last ? "Começar" : "Continuar"} onPress={next} />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

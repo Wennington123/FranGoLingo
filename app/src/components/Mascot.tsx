@@ -12,6 +12,9 @@ const PALETTE: Record<string, string | null> = {
   P: "#f9a8d4",
 };
 
+// Contorno: dá definição da cara branca sobre fundo branco.
+const OUTLINE = "#9AA6B2";
+
 const SPRITE = [
   "......RR........",
   ".....RRRR.......",
@@ -69,6 +72,32 @@ function poseFor(mode: MascotMode, t: number, frame: number) {
   };
 }
 
+function buildGrid(pose: ReturnType<typeof poseFor>): Map<string, string> {
+  const grid = new Map<string, string>();
+  SPRITE.forEach((line, row) => {
+    for (let col = 0; col < line.length; col++) {
+      const color = PALETTE[line[col]];
+      if (color) grid.set(`${row},${col}`, color);
+    }
+  });
+  if (pose.expr !== "blink") {
+    for (const [row, col, ch] of EYE_CELLS[pose.expr]) {
+      grid.set(`${row},${col}`, PALETTE[ch] as string);
+    }
+  }
+  if (pose.beakOpen) {
+    for (let col = 6; col <= 8; col++) grid.set(`10,${col}`, PALETTE.O as string);
+  }
+  return grid;
+}
+
+const NEIGHBORS = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+];
+
 type Props = { mode?: MascotMode; cell?: number };
 
 export function Mascot({ mode = "idle", cell = 8 }: Props) {
@@ -80,22 +109,35 @@ export function Mascot({ mode = "idle", cell = 8 }: Props) {
   }, []);
 
   const pose = poseFor(mode, frame * 0.1, frame);
+  const grid = buildGrid(pose);
 
-  const cells: { row: number; col: number; color: string }[] = [];
-  SPRITE.forEach((line, row) => {
-    for (let col = 0; col < line.length; col++) {
-      const color = PALETTE[line[col]];
-      if (color) cells.push({ row, col, color });
-    }
-  });
-  if (pose.expr !== "blink") {
-    for (const [row, col, ch] of EYE_CELLS[pose.expr]) {
-      cells.push({ row, col, color: PALETTE[ch] as string });
+  const outline: string[] = [];
+  for (let row = -1; row <= SPRITE_H; row++) {
+    for (let col = -1; col <= SPRITE_W; col++) {
+      const key = `${row},${col}`;
+      if (grid.has(key)) continue;
+      if (NEIGHBORS.some(([dr, dc]) => grid.has(`${row + dr},${col + dc}`))) {
+        outline.push(key);
+      }
     }
   }
-  if (pose.beakOpen) {
-    for (let col = 6; col <= 8; col++) cells.push({ row: 10, col, color: PALETTE.O as string });
-  }
+
+  const rect = (key: string, color: string, i: string) => {
+    const [row, col] = key.split(",").map(Number);
+    return (
+      <View
+        key={i}
+        style={{
+          position: "absolute",
+          left: col * cell,
+          top: row * cell,
+          width: cell,
+          height: cell,
+          backgroundColor: color,
+        }}
+      />
+    );
+  };
 
   return (
     <View style={[styles.stage, { width: SPRITE_W * cell, height: SPRITE_H * cell }]}>
@@ -106,19 +148,8 @@ export function Mascot({ mode = "idle", cell = 8 }: Props) {
           transform: [{ translateY: pose.yOff }, { scaleY: 1 - pose.squash }],
         }}
       >
-        {cells.map((c, i) => (
-          <View
-            key={i}
-            style={{
-              position: "absolute",
-              left: c.col * cell,
-              top: c.row * cell,
-              width: cell,
-              height: cell,
-              backgroundColor: c.color,
-            }}
-          />
-        ))}
+        {outline.map((key, i) => rect(key, OUTLINE, `o${i}`))}
+        {Array.from(grid.entries()).map(([key, color], i) => rect(key, color, `c${i}`))}
       </View>
     </View>
   );

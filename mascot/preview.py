@@ -22,8 +22,10 @@ SKETCH = HERE / "sketch.js"
 OUT = HERE / "preview"
 
 BG = (11, 16, 32)
-CELL = 16
+CELL = 12
 FRAMES = 8
+
+OUTLINE = (154, 166, 178)
 
 PALETTE: dict[str, tuple[int, int, int] | None] = {}
 SPRITE: list[str] = []
@@ -89,19 +91,30 @@ def draw_sprite(pose) -> Image.Image:
             fill=color + (255,),
         )
 
+    grid: dict[tuple[int, int], str] = {}
     for row, line in enumerate(SPRITE):
         for col, ch in enumerate(line):
-            color = PALETTE.get(ch)
-            if color:
-                cell(col, row, color)
+            if PALETTE.get(ch):
+                grid[(row, col)] = ch
 
     if pose["expr"] != "blink":
         for row, col, ch in EYE_CELLS[pose["expr"]]:
-            cell(col, row, PALETTE[ch])
+            grid[(row, col)] = ch
 
     if pose["beakOpen"]:
         for col in range(6, 9):
-            cell(col, 10, PALETTE["O"])
+            grid[(10, col)] = "O"
+
+    for row in range(-1, len(SPRITE) + 1):
+        for col in range(-1, len(SPRITE[0]) + 1):
+            if (row, col) in grid:
+                continue
+            neighbors = [(row + 1, col), (row - 1, col), (row, col + 1), (row, col - 1)]
+            if any(n in grid for n in neighbors):
+                cell(col, row, OUTLINE)
+
+    for (row, col), ch in grid.items():
+        cell(col, row, PALETTE[ch])
 
     return img
 

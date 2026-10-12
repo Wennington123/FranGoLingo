@@ -102,7 +102,7 @@ export function ReaderScreen({ route, navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        {!seenReaderHint && (
+        {!seenReaderHint && node.type === "line" && (
           <Pressable style={styles.hint} onPress={dismissReaderHint}>
             <Text style={styles.hintText}>
               Toque em qualquer palavra em francês para ver a tradução.

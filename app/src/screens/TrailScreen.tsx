@@ -38,7 +38,14 @@ export function TrailScreen({ navigation }: Props) {
                   onPress={() => navigation.navigate("Reader", { storyId: story.id })}
                   style={[styles.node, { backgroundColor: bg }]}
                 >
-                  <Text style={styles.nodeIcon}>{done ? "✓" : unlocked ? "★" : "🔒"}</Text>
+                  <Text
+                    style={[
+                      styles.nodeIcon,
+                      { color: unlocked ? "#FFFFFF" : colors.textMuted },
+                    ]}
+                  >
+                    {done ? "✓" : unlocked ? "★" : "🔒"}
+                  </Text>
                 </Pressable>
               </View>
               <Text style={styles.nodeLabel}>{story.title}</Text>
