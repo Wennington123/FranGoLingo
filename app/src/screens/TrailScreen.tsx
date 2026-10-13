@@ -113,5 +113,5 @@ const styles = StyleSheet.create({
   tab: { flex: 1, alignItems: "center", paddingVertical: 10, gap: 2 },
   tabIcon: { fontSize: 22 },
   tabLabel: { fontSize: 12, fontWeight: font.bold, color: colors.textFaint },
-  tabActive: { color: colors.green },
+  tabActive: { color: colors.blue },
 });

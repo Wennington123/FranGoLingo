@@ -1,5 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -16,6 +18,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const seenTutorial = useOnboarding((s) => s.seenTutorial);
+  const [fontsLoaded] = useFonts({
+    MaterialCommunityIcons: MaterialCommunityIcons.font,
+  });
+
+  if (!fontsLoaded) return null;
 
   return (
     <SafeAreaProvider>
