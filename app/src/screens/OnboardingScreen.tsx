@@ -22,6 +22,9 @@ const STEPS: Step[] = [
     mode: "idle",
   },
   { title: "Responda os exercícios", text: "De vez em quando a história pausa e pede uma resposta.", mode: "idle" },
+  { title: "Ouça e repita", text: "Use o botão de áudio para ouvir a pronúncia e repita em voz alta.", mode: "happy" },
+  { title: "Descubra Histórias", text: "A área Histórias reúne leituras extras para praticar no seu ritmo.", mode: "idle" },
+  { title: "Revise seus erros", text: "A Revisão guarda os pontos que merecem outra tentativa.", mode: "idle" },
   {
     title: "Cuide dos corações",
     text: "Errar custa um coração. Você tem 5 por história. Não perca todos!",

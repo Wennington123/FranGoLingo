@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { EDGE, font, radius, variants, type Variant } from "../theme";
+import { useSoundEffects } from "./SoundEffects";
 
 type Props = {
   label: string;
@@ -12,6 +13,7 @@ type Props = {
 export function DuoButton({ label, onPress, variant = "primary", disabled }: Props) {
   const v = variants[variant];
   const [pressed, setPressed] = useState(false);
+  const { play } = useSoundEffects();
 
   return (
     <View style={[styles.wrap, { backgroundColor: v.edge }, disabled && styles.disabled]}>
@@ -19,7 +21,10 @@ export function DuoButton({ label, onPress, variant = "primary", disabled }: Pro
         disabled={disabled}
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
-        onPress={onPress}
+        onPress={() => {
+          play("tap");
+          onPress();
+        }}
         style={[
           styles.inner,
           {

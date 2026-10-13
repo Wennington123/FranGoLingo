@@ -1,0 +1,68 @@
+{
+  "id": "fr-a1-03-une-journee",
+  "title": "Une journée simple",
+  "level": "A1",
+  "language": "fr",
+  "nativeLanguage": "pt-BR",
+  "tags": ["routine", "time"],
+  "keyVocabulary": [
+    { "word": "le matin", "translation": "de manhã" },
+    { "word": "travailler", "translation": "trabalhar" },
+    { "word": "le soir", "translation": "à noite" }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "line",
+      "speaker": "Camille",
+      "text": "Le matin, je bois un thé.",
+      "translation": "De manhã, eu tomo um chá.",
+      "tokens": [
+        { "t": "Le", "gloss": "o" },
+        { "t": "matin", "gloss": "manhã" },
+        { "t": ",", "gloss": null },
+        { "t": "je", "gloss": "eu" },
+        { "t": "bois", "gloss": "bebo / tomo" },
+        { "t": "un", "gloss": "um" },
+        { "t": "thé", "gloss": "chá" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n2",
+      "type": "exercise",
+      "exerciseType": "fill_blank",
+      "prompt": "Complete a frase:",
+      "sentence": ["Je", "__", "un", "thé"],
+      "blankIndex": 1,
+      "options": ["bois", "vais", "suis"],
+      "answer": "bois",
+      "explanation": "« Je bois » significa « eu bebo » ou « eu tomo »."
+    },
+    {
+      "id": "n3",
+      "type": "line",
+      "speaker": "Camille",
+      "text": "Le soir, je lis un livre.",
+      "translation": "À noite, eu leio um livro.",
+      "tokens": [
+        { "t": "Le", "gloss": "o" },
+        { "t": "soir", "gloss": "noite" },
+        { "t": ",", "gloss": null },
+        { "t": "je", "gloss": "eu" },
+        { "t": "lis", "gloss": "leio" },
+        { "t": "un", "gloss": "um" },
+        { "t": "livre", "gloss": "livro" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n4",
+      "type": "exercise",
+      "exerciseType": "comprehension",
+      "question": "O que Camille faz à noite?",
+      "options": ["Lê um livro", "Toma um café", "Vai ao trabalho"],
+      "answer": "Lê um livro"
+    }
+  ]
+}

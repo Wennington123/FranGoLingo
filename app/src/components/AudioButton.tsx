@@ -12,6 +12,11 @@ type Props = {
 export function AudioButton({ assetId, autoPlay }: Props) {
   const player = useAudioPlayer(assetId ?? null);
   const status = useAudioPlayerStatus(player);
+
+  useEffect(() => {
+    player.volume = 1;
+    player.muted = false;
+  }, [player, assetId]);
   const playedFor = useRef<number | null>(null);
 
   useEffect(() => {
@@ -22,6 +27,7 @@ export function AudioButton({ assetId, autoPlay }: Props) {
   }, [autoPlay, assetId, status.isLoaded, player]);
 
   const enabled = assetId !== undefined;
+  const unavailable = enabled && !status.isLoaded;
 
   return (
     <Pressable
@@ -39,7 +45,7 @@ export function AudioButton({ assetId, autoPlay }: Props) {
           color={enabled ? colors.blueDark : colors.textFaint}
         />
         <Text style={[styles.label, !enabled && styles.labelDisabled]}>
-          {enabled ? "Ouvir" : "Áudio em breve"}
+          {!enabled ? "Áudio em breve" : unavailable ? "Carregando áudio…" : "Ouvir"}
         </Text>
       </View>
     </Pressable>

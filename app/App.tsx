@@ -2,12 +2,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import { setAudioModeAsync, setIsAudioActiveAsync } from "expo-audio";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import type { RootStackParamList } from "./src/navigation";
 import { OnboardingScreen } from "./src/screens/OnboardingScreen";
 import { ReaderScreen } from "./src/screens/ReaderScreen";
+import { SoundEffectsProvider } from "./src/components/SoundEffects";
 import { ReviewScreen } from "./src/screens/ReviewScreen";
 import { StoriesScreen } from "./src/screens/StoriesScreen";
 import { TrailScreen } from "./src/screens/TrailScreen";
@@ -22,10 +25,22 @@ export default function App() {
     MaterialCommunityIcons: MaterialCommunityIcons.font,
   });
 
+  useEffect(() => {
+    void setIsAudioActiveAsync(true);
+    void setAudioModeAsync({
+      playsInSilentMode: true,
+      interruptionMode: "duckOthers",
+      allowsRecording: false,
+      shouldPlayInBackground: false,
+      shouldRouteThroughEarpiece: false,
+    });
+  }, []);
+
   if (!fontsLoaded) return null;
 
   return (
     <SafeAreaProvider>
+      <SoundEffectsProvider>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         <StatusBar style="dark" />
         <NavigationContainer>
@@ -57,7 +72,8 @@ export default function App() {
         </NavigationContainer>
 
         {!seenTutorial && <OnboardingScreen />}
-      </View>
+        </View>
+      </SoundEffectsProvider>
     </SafeAreaProvider>
   );
 }

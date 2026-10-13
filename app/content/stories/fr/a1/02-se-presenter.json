@@ -1,0 +1,81 @@
+{
+  "id": "fr-a1-02-se-presenter",
+  "title": "Se présenter",
+  "level": "A1",
+  "language": "fr",
+  "nativeLanguage": "pt-BR",
+  "tags": ["greetings", "people"],
+  "keyVocabulary": [
+    { "word": "je m'appelle", "translation": "eu me chamo" },
+    { "word": "enchanté", "translation": "prazer" },
+    { "word": "habiter", "translation": "morar" }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "line",
+      "speaker": "Léa",
+      "text": "Bonjour! Je m'appelle Léa.",
+      "translation": "Olá! Eu me chamo Léa.",
+      "tokens": [
+        { "t": "Bonjour", "gloss": "olá / bom dia" },
+        { "t": "!", "gloss": null },
+        { "t": "Je", "gloss": "eu" },
+        { "t": "m'appelle", "gloss": "me chamo" },
+        { "t": "Léa", "gloss": "Léa" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n2",
+      "type": "line",
+      "speaker": "Noé",
+      "text": "Enchanté! Moi, c'est Noé.",
+      "translation": "Prazer! Eu sou Noé.",
+      "tokens": [
+        { "t": "Enchanté", "gloss": "prazer" },
+        { "t": "!", "gloss": null },
+        { "t": "Moi", "gloss": "eu / mim" },
+        { "t": ",", "gloss": null },
+        { "t": "c'est", "gloss": "é / é o" },
+        { "t": "Noé", "gloss": "Noé" },
+        { "t": ".", "gloss": null }
+      ]
+    },
+    {
+      "id": "n3",
+      "type": "exercise",
+      "exerciseType": "fill_blank",
+      "prompt": "Complete a frase:",
+      "sentence": ["Je", "__", "Léa"],
+      "blankIndex": 1,
+      "options": ["m'appelle", "habite", "suis"],
+      "answer": "m'appelle",
+      "explanation": "« Je m'appelle » apresenta o nome de uma pessoa."
+    },
+    {
+      "id": "n4",
+      "type": "line",
+      "speaker": "Léa",
+      "text": "J'habite à Lyon. Et toi?",
+      "translation": "Eu moro em Lyon. E você?",
+      "tokens": [
+        { "t": "J'habite", "gloss": "eu moro" },
+        { "t": "à", "gloss": "em" },
+        { "t": "Lyon", "gloss": "Lyon" },
+        { "t": ".", "gloss": null },
+        { "t": "Et", "gloss": "e" },
+        { "t": "toi", "gloss": "você" },
+        { "t": "?", "gloss": null }
+      ]
+    },
+    {
+      "id": "n5",
+      "type": "exercise",
+      "exerciseType": "comprehension",
+      "question": "Onde Léa mora?",
+      "options": ["Em Lyon", "Em Paris", "Em Lille"],
+      "answer": "Em Lyon"
+    }
+  ]
+}

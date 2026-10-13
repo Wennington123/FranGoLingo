@@ -10,6 +10,7 @@ import { FeedbackBanner } from "../components/FeedbackBanner";
 import { LineText } from "../components/LineText";
 import { Mascot } from "../components/Mascot";
 import { ProgressBar } from "../components/ProgressBar";
+import { useSoundEffects } from "../components/SoundEffects";
 import { getStory } from "../data/stories";
 import { resolveAudio } from "../data/audio";
 import type { RootStackParamList } from "../navigation";
@@ -24,6 +25,7 @@ export function ReaderScreen({ route, navigation }: Props) {
   const story = getStory(route.params.storyId);
   const { hearts, loseHeart, gainXp, addMistake, completeStory, resetHearts } =
     useProgress();
+  const { play } = useSoundEffects();
   const seenReaderHint = useOnboarding((s) => s.seenReaderHint);
   const dismissReaderHint = useOnboarding((s) => s.dismissReaderHint);
 
@@ -45,6 +47,7 @@ export function ReaderScreen({ route, navigation }: Props) {
 
   const finish = () => {
     completeStory(story.id);
+    play("complete");
     setFinished(true);
   };
 
@@ -134,9 +137,11 @@ export function ReaderScreen({ route, navigation }: Props) {
             node={node}
             onAnswer={(correct) => {
               if (correct) {
+                play("success");
                 gainXp(10);
                 setFeedback({ correct: true });
               } else {
+                play("error");
                 loseHeart();
                 addMistake({
                   storyId: story.id,
