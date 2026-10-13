@@ -17,6 +17,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.frangolingo"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
