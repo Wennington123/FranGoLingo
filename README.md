@@ -3,6 +3,12 @@
 Aprender francês por **histórias interativas**, offline-first, open-source.
 Modelo inspirado no Duolingo Stories — app independente, sem uso de assets ou conteúdo do Duolingo.
 
+## Referência pedagógica
+
+A estrutura de progressão também considera o guia oficial francês **Pour enseigner la lecture et l’écriture au CP**, coordenado pelo Ministério da Educação Nacional francês, edição de agosto de 2019, ISBN 978-2-11-152104-9. Usamos suas orientações como referência metodológica para organizar decodificação, relações grafema-fonema, leitura em voz alta, compreensão e escrita; o guia não é conteúdo do aplicativo.
+
+O arquivo local `guide-pour-enseigner-la-lecture-et-l-ecriture-au-cp-67854.md` é mantido como material de referência. Consulte a edição oficial e seus termos antes de redistribuir qualquer trecho ou material derivado.
+
 ## Estrutura
 
 ```

@@ -1,4 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { AppIcon } from "../components/AppIcon";
 import { useProgress } from "../store/progress";
 import { colors, font, radius } from "../theme";
 
@@ -8,7 +9,7 @@ export function ReviewScreen() {
   if (mistakes.length === 0) {
     return (
       <View style={styles.center}>
-        <Text style={styles.emptyIcon}>🎉</Text>
+        <AppIcon name="party-popper" size={44} color={colors.blue} />
         <Text style={styles.empty}>Nenhum erro para revisar.</Text>
       </View>
     );

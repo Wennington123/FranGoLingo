@@ -7,6 +7,7 @@ import type { RootStackParamList } from "./src/navigation";
 import { OnboardingScreen } from "./src/screens/OnboardingScreen";
 import { ReaderScreen } from "./src/screens/ReaderScreen";
 import { ReviewScreen } from "./src/screens/ReviewScreen";
+import { StoriesScreen } from "./src/screens/StoriesScreen";
 import { TrailScreen } from "./src/screens/TrailScreen";
 import { useOnboarding } from "./src/store/onboarding";
 import { colors, font } from "./src/theme";
@@ -38,6 +39,11 @@ export default function App() {
               name="Reader"
               component={ReaderScreen}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Stories"
+              component={StoriesScreen}
+              options={{ title: "Histórias" }}
             />
             <Stack.Screen name="Review" component={ReviewScreen} options={{ title: "Revisão" }} />
           </Stack.Navigator>

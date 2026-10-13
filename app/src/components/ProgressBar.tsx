@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   fill: {
     height: "100%",
-    backgroundColor: colors.green,
+    backgroundColor: colors.blue,
     borderRadius: radius.pill,
     justifyContent: "flex-start",
   },

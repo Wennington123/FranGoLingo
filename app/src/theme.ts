@@ -44,8 +44,8 @@ export const EDGE = 4; // altura da "borda 3D" dos botões
 export type Variant = "primary" | "secondary" | "danger" | "neutral";
 
 export const variants: Record<Variant, { bg: string; edge: string; text: string }> = {
-  primary: { bg: colors.green, edge: colors.greenDark, text: "#FFFFFF" },
-  secondary: { bg: colors.blue, edge: colors.blueDark, text: "#FFFFFF" },
+  primary: { bg: colors.blue, edge: colors.blueDark, text: "#FFFFFF" },
+  secondary: { bg: colors.purple, edge: "#A566D0", text: "#FFFFFF" },
   danger: { bg: colors.red, edge: colors.redDark, text: "#FFFFFF" },
   neutral: { bg: colors.bg, edge: colors.border, text: colors.textMuted },
 };

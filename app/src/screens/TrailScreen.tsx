@@ -1,6 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppIcon } from "../components/AppIcon";
 import { stories } from "../data/stories";
 import type { RootStackParamList } from "../navigation";
 import { useProgress } from "../store/progress";
@@ -17,9 +18,18 @@ export function TrailScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.header}>
-        <Text style={styles.stat}>🔥 0</Text>
-        <Text style={styles.stat}>⚡ {xp}</Text>
-        <Text style={[styles.stat, styles.hearts]}>❤️ {hearts}</Text>
+        <View style={styles.statGroup}>
+          <AppIcon name="fire" size={20} color={colors.red} />
+          <Text style={styles.stat}>0</Text>
+        </View>
+        <View style={styles.statGroup}>
+          <AppIcon name="lightning-bolt" size={20} color={colors.yellowDark} />
+          <Text style={styles.stat}>{xp}</Text>
+        </View>
+        <View style={styles.statGroup}>
+          <AppIcon name="heart" size={20} color={colors.red} />
+          <Text style={[styles.stat, styles.hearts]}>{hearts}</Text>
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.path}>
@@ -38,14 +48,11 @@ export function TrailScreen({ navigation }: Props) {
                   onPress={() => navigation.navigate("Reader", { storyId: story.id })}
                   style={[styles.node, { backgroundColor: bg }]}
                 >
-                  <Text
-                    style={[
-                      styles.nodeIcon,
-                      { color: unlocked ? "#FFFFFF" : colors.textMuted },
-                    ]}
-                  >
-                    {done ? "✓" : unlocked ? "★" : "🔒"}
-                  </Text>
+                  <AppIcon
+                    name={done ? "check" : unlocked ? "star" : "lock"}
+                    size={30}
+                    color={unlocked ? "#FFFFFF" : colors.textMuted}
+                  />
                 </Pressable>
               </View>
               <Text style={styles.nodeLabel}>{story.title}</Text>
@@ -56,11 +63,15 @@ export function TrailScreen({ navigation }: Props) {
 
       <View style={styles.tabbar}>
         <View style={styles.tab}>
-          <Text style={styles.tabIcon}>🏠</Text>
+          <AppIcon name="home" size={22} color={colors.blue} />
           <Text style={[styles.tabLabel, styles.tabActive]}>Lições</Text>
         </View>
+        <Pressable style={styles.tab} onPress={() => navigation.navigate("Stories")}>
+          <AppIcon name="book-open-page-variant" size={22} color={colors.textFaint} />
+          <Text style={styles.tabLabel}>Histórias</Text>
+        </Pressable>
         <Pressable style={styles.tab} onPress={() => navigation.navigate("Review")}>
-          <Text style={styles.tabIcon}>📝</Text>
+          <AppIcon name="clipboard-text-outline" size={22} color={colors.textFaint} />
           <Text style={styles.tabLabel}>Revisão</Text>
         </Pressable>
       </View>
@@ -77,6 +88,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: colors.border,
   },
+  statGroup: { flexDirection: "row", alignItems: "center", gap: 6 },
   stat: { fontSize: 18, fontWeight: font.bold, color: colors.textMuted },
   hearts: { color: colors.red },
   path: { padding: 24, paddingBottom: 48, alignItems: "center", gap: 8 },

@@ -1,7 +1,8 @@
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useEffect, useRef } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, font, radius } from "../theme";
+import { AppIcon } from "./AppIcon";
 
 type Props = {
   assetId?: number;
@@ -31,9 +32,16 @@ export function AudioButton({ assetId, autoPlay }: Props) {
         player.play();
       }}
     >
-      <Text style={[styles.label, !enabled && styles.labelDisabled]}>
-        {enabled ? "🔊  Ouvir" : "🔈  Áudio em breve"}
-      </Text>
+      <View style={styles.content}>
+        <AppIcon
+          name={enabled ? "volume-high" : "volume-off"}
+          size={18}
+          color={enabled ? colors.blueDark : colors.textFaint}
+        />
+        <Text style={[styles.label, !enabled && styles.labelDisabled]}>
+          {enabled ? "Ouvir" : "Áudio em breve"}
+        </Text>
+      </View>
     </Pressable>
   );
 }
@@ -47,6 +55,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   disabled: { backgroundColor: colors.bgAlt },
+  content: { flexDirection: "row", alignItems: "center", gap: 8 },
   label: { color: colors.blueDark, fontWeight: font.semi, fontSize: 15 },
   labelDisabled: { color: colors.textFaint },
 });

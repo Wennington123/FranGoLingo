@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { colors, font, radius } from "../theme";
+import { AppIcon } from "./AppIcon";
 import { DuoButton } from "./DuoButton";
 
 type Props = {
@@ -16,7 +17,9 @@ export function FeedbackBanner({ correct, solution, onContinue }: Props) {
   return (
     <View style={[styles.banner, { backgroundColor: bg }]}>
       <View style={styles.row}>
-        <Text style={[styles.badge, { backgroundColor: badge }]}>{correct ? "✓" : "✕"}</Text>
+        <View style={[styles.badge, { backgroundColor: badge }]}>
+          <AppIcon name={correct ? "check" : "close"} size={22} color="#FFFFFF" />
+        </View>
         <View style={styles.texts}>
           <Text style={[styles.title, { color: accent }]}>
             {correct ? "Excelente!" : "Solução correta:"}
@@ -47,13 +50,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: radius.pill,
-    textAlign: "center",
-    textAlignVertical: "center",
-    lineHeight: 40,
-    color: "#FFFFFF",
-    fontSize: 22,
-    fontWeight: font.bold,
-    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
   },
   texts: { flex: 1 },
   title: { fontSize: 20, fontWeight: font.bold },

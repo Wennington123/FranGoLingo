@@ -9,6 +9,9 @@ Filosofia: começar simples e funcionar ponta-a-ponta antes de escalar.
 2. **Vertical slice primeiro.** Uma história FR-A1 completa (texto + tradução + gloss por palavra + áudio + 2 exercícios) funcionando ponta-a-ponta vale mais que 50 telas vazias.
 3. **Pipeline > digitação.** Python gera/valida JSON e áudio. Humano escreve texto bruto, script faz o resto.
 4. **Dados são o produto.** Schema estável e versionado; app só interpreta.
+5. **Progressão pedagógica explícita.** Organizar atividades por decodificação, relações grafema-fonema, sílabas, leitura em voz alta, compreensão e escrita, adaptando a referência do guia francês ao objetivo pt-BR → francês.
+
+Referência metodológica: *Pour enseigner la lecture et l’écriture au CP*, Ministério da Educação Nacional francês, edição de agosto de 2019, ISBN 978-2-11-152104-9. O guia orienta a metodologia, mas não é conteúdo redistribuído pelo aplicativo.
 
 ## Fases
 

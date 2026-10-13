@@ -2,6 +2,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppIcon } from "../components/AppIcon";
 import { AudioButton } from "../components/AudioButton";
 import { DuoButton } from "../components/DuoButton";
 import { ExerciseCard } from "../components/ExerciseCard";
@@ -94,12 +95,15 @@ export function ReaderScreen({ route, navigation }: Props) {
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.header}>
         <Pressable onPress={() => navigation.goBack()} hitSlop={12}>
-          <Text style={styles.close}>✕</Text>
+          <AppIcon name="close" size={28} color={colors.textFaint} />
         </Pressable>
         <View style={styles.progressWrap}>
           <ProgressBar progress={progress} />
         </View>
-        <Text style={styles.hearts}>❤️ {hearts}</Text>
+        <View style={styles.hearts}>
+          <AppIcon name="heart" size={18} color={colors.red} />
+          <Text style={styles.heartCount}>{hearts}</Text>
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
@@ -175,9 +179,9 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 8,
   },
-  close: { fontSize: 22, color: colors.textFaint, fontWeight: font.bold },
   progressWrap: { flex: 1 },
-  hearts: { fontSize: 16, fontWeight: font.bold, color: colors.red },
+  hearts: { flexDirection: "row", alignItems: "center", gap: 4 },
+  heartCount: { fontSize: 16, fontWeight: font.bold, color: colors.red },
   content: { padding: 20, gap: 18, paddingBottom: 120 },
   hint: {
     padding: 14,
