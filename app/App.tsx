@@ -21,9 +21,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const seenTutorial = useOnboarding((s) => s.seenTutorial);
-  const [fontsLoaded] = useFonts({
-    MaterialCommunityIcons: MaterialCommunityIcons.font,
-  });
+  const [fontsLoaded, fontError] = useFonts(MaterialCommunityIcons.font);
 
   useEffect(() => {
     void setIsAudioActiveAsync(true);
@@ -36,7 +34,7 @@ export default function App() {
     });
   }, []);
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded && !fontError) return null;
 
   return (
     <SafeAreaProvider>

@@ -19,7 +19,8 @@
       "bundleIdentifier": "app.frangolingo"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-sqlite"
     ]
   }
 }
