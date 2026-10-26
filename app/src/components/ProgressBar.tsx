@@ -14,7 +14,7 @@ export function ProgressBar({ progress }: { progress: number }) {
 
 const styles = StyleSheet.create({
   track: {
-    height: 16,
+    height: 18,
     borderRadius: radius.pill,
     backgroundColor: colors.border,
     overflow: "hidden",
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   shine: {
-    height: 5,
+    height: 6,
     marginTop: 3,
     marginHorizontal: 6,
     borderRadius: radius.pill,

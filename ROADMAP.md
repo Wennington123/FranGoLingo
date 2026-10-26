@@ -15,30 +15,33 @@ Referência metodológica: *Pour enseigner la lecture et l’écriture au CP*, M
 
 ## Fases
 
-### Fase 0 — Fundação (atual)
+### Fase 0 — Fundação (concluída)
 - [x] Repo + estrutura
 - [x] Schema de história (`docs/data-schema.md`)
 - [x] 1 história FR-A1 de exemplo
 - [x] Pipeline Python: validar + TTS
 - [x] Esqueleto app (trilha / leitor / revisão)
 
-### Fase 1 — Leitor real
-- Renderização progressiva linha-a-linha com áudio
-- Tooltip por palavra (gloss de `tokens`)
-- Exercícios: completar lacuna + compreensão
-- Lógica de vidas (Zustand) + animação acerto/erro
-- Mascote Frango em RN (`Mascot.tsx`, mesmo sprite do p5)
-- Tutorial de primeira-uso (onboarding) + dica no leitor
+### Fase 1 — Leitor real (concluída, com pendência de áudio)
+- [x] Renderização progressiva linha-a-linha com áudio
+- [x] Tooltip por palavra (gloss de `tokens`)
+- [x] Exercícios: completar lacuna + compreensão
+- [x] Lógica de vidas (Zustand) + animação acerto/erro
+- [x] Mascote Frango em RN (`Mascot.tsx`, mesmo sprite do p5)
+- [x] Tutorial de primeira-uso (onboarding) + dica no leitor
+- [ ] Áudio TTS das histórias 02 e 03 (só `01-au-cafe` tem `.mp3`)
 
-### Fase 2 — Persistência
-- `expo-sqlite`: progresso, histórias desbloqueadas, log de erros
-- Tela Revisão consolidando erros
+### Fase 2 — Persistência (atual)
+- [ ] `expo-sqlite`: progresso, histórias desbloqueadas, log de erros
+- [ ] Persistir estado de onboarding (tutorial não reaparecer)
+- [ ] Tela Revisão consolidando erros e permitindo refazer/remover
 
 ### Fase 3 — Conteúdo escalável e identidade visual
 - Loader de pacote de conteúdo (zip) baixável + cache
 - Áudio: baixar sob demanda, não embutir
 - Script de ingestão de glossário (FreeDict/OMW) e frases (Tatoeba)
 - Mascote Frango: sketch p5 (`mascot/`) → sprite sheet → app (ver `docs/mascot.md`)
+- Política de áudio: Lingua Libre para palavras; Piper com voz FR auditada no pipeline de frases; nunca distribuir áudio gerado por `edge-tts`. Manifest com autor/licença por arquivo (ver `docs/content-sources.md`)
 
 ### Fase 4 — Autoria
 - Formato de fonte simples (YAML/MD) para colaborador escrever história

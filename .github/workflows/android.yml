@@ -44,7 +44,6 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck
-        continue-on-error: true
 
       - name: Align Expo deps
         run: npx expo install --fix

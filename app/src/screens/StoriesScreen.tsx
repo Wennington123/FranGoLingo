@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     padding: 16,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     borderWidth: 2,
     borderColor: colors.blueLight,
     backgroundColor: colors.bg,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   iconWrap: {
     width: 52,
     height: 52,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.blueLight,

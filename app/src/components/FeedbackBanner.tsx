@@ -40,8 +40,8 @@ export function FeedbackBanner({ correct, solution, onContinue }: Props) {
 
 const styles = StyleSheet.create({
   banner: {
-    borderTopLeftRadius: radius.lg,
-    borderTopRightRadius: radius.lg,
+    borderTopLeftRadius: radius.xl,
+    borderTopRightRadius: radius.xl,
     padding: 16,
     gap: 16,
   },

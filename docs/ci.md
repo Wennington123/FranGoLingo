@@ -6,9 +6,9 @@ Workflow: `.github/workflows/android.yml`.
 
 Em push para `main`, PR, ou manual (`workflow_dispatch`):
 
-1. Node 20 + Java 17 (Temurin)
+1. Node 22 + Java 17 (Temurin)
 2. `npm install`
-3. `npm run typecheck` (não bloqueia — Fase 0)
+3. `npm run typecheck` (bloqueante — falha o build se houver erro de tipo)
 4. `expo prebuild --platform android`
 5. `./gradlew assembleRelease`
 6. Sobe `app-release.apk` como artefato `frangolingo-android-apk`

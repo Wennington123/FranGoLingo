@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { colors, font } from "../theme";
+import { colors, font, radius } from "../theme";
 import type { ExerciseNode } from "../types";
 import { WordChip, type ChipState } from "./WordChip";
 
@@ -71,7 +71,12 @@ export function ExerciseCard({ node, onAnswer }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 16 },
+  container: {
+    gap: 16,
+    padding: 18,
+    borderRadius: radius.xl,
+    backgroundColor: colors.bgAlt,
+  },
   instruction: { fontSize: 20, fontWeight: font.bold, color: colors.text },
   question: { fontSize: 22, fontWeight: font.bold, color: colors.text },
   sentence: { flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 },

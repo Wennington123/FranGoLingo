@@ -47,7 +47,7 @@ npm install
 npx expo start
 ```
 
-Estado atual: esqueleto (Fase 0). Ver `ROADMAP.md`.
+Estado atual: leitor interativo funcionando ponta-a-ponta (Fase 1) com 3 histórias FR-A1. A persistência de progresso (Fase 2) ainda é em memória — fechar o app zera XP, corações e conclusões. Áudio TTS só está embutido para `01-au-cafe`; as histórias 02 e 03 ainda não têm `.mp3`. Ver `ROADMAP.md`.
 
 ## Build do APK (CI)
 

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   tooltip: {
     marginTop: 14,
     padding: 14,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
     backgroundColor: colors.text,
     alignSelf: "flex-start",
   },
