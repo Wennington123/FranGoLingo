@@ -12,7 +12,6 @@ import { Mascot } from "../components/Mascot";
 import { ProgressBar } from "../components/ProgressBar";
 import { useSoundEffects } from "../components/SoundEffects";
 import { getStory } from "../data/stories";
-import { resolveAudio } from "../data/audio";
 import type { RootStackParamList } from "../navigation";
 import { useOnboarding } from "../store/onboarding";
 import { useProgress } from "../store/progress";
@@ -97,7 +96,11 @@ export function ReaderScreen({ route, navigation }: Props) {
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()} hitSlop={12}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          hitSlop={12}
+          style={styles.closeBtn}
+        >
           <AppIcon name="close" size={28} color={colors.textFaint} />
         </Pressable>
         <View style={styles.progressWrap}>
@@ -123,7 +126,7 @@ export function ReaderScreen({ route, navigation }: Props) {
           <>
             {node.speaker && <Text style={styles.speaker}>{node.speaker}</Text>}
             <LineText tokens={node.tokens} />
-            <AudioButton assetId={resolveAudio(node.audio)} autoPlay />
+            <AudioButton audioPath={node.audio} autoPlay />
             {showTranslation ? (
               <Text style={styles.translation}>{node.translation}</Text>
             ) : (
@@ -183,6 +186,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 8,
+  },
+  closeBtn: {
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
   },
   progressWrap: { flex: 1 },
   hearts: {

@@ -39,6 +39,17 @@ Notas de acesso:
 | **FreeDict fra-por** | Dicionário | GPL | Palavra→palavra |
 | **Open Multilingual WordNet (OMW)** | fr + pt ligados por ILI | MIT (alguns) | Palavra→palavra por sentido |
 
+## Decks Anki FR–PT-BR (referência, não fonte de assets)
+
+| Deck | Conteúdo | Licença/uso |
+|------|----------|-------------|
+| **AnkiWeb "Francês para Português (+1000 palavras e expressões)"** (1792738210) | frente em francês com áudio, verso em português | Licença não declarada; usar só estrutura/vocabulário, não redistribuir áudio |
+| **AnkiWeb "francês iniciante ao avançado"** (569671098) | progressão iniciante→avançado | Licença não declarada; referência de currículo |
+| **AnkiWeb "Portugais du Brésil — Vocabulaire avancé"** (1488225311) | PT→FR, áudio gerado com WaveNet | Direção inversa; áudio TTS, não redistribuir |
+| **AnkiDecks "Français - Portugais"** (103 cards) | vocabulário FR-PT | Sem áudio; licença não declarada |
+
+**Política:** decks Anki são úteis para copiar a *estrutura* (campos, tags, níveis CEFR) e conferir vocabulário. O AnkiWeb não aplica licença aberta por padrão e muitos decks usam áudio de TTS/Forvo, então não incorporamos áudio nem texto desses decks no app. Áudio continua vindo de Lingua Libre/Tatoeba/Common Voice ou Piper com voz auditada.
+
 ## Arquitetura de áudio recomendada
 
 O app é offline-first (React Native + Expo), sem backend. Então:

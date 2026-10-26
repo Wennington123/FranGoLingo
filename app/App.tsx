@@ -1,7 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useFonts } from "expo-font";
 import { setAudioModeAsync, setIsAudioActiveAsync } from "expo-audio";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -14,6 +12,7 @@ import { SoundEffectsProvider } from "./src/components/SoundEffects";
 import { ReviewScreen } from "./src/screens/ReviewScreen";
 import { StoriesScreen } from "./src/screens/StoriesScreen";
 import { TrailScreen } from "./src/screens/TrailScreen";
+import { useAudioAssets } from "./src/data/audioAssets";
 import { useOnboarding } from "./src/store/onboarding";
 import { colors, font } from "./src/theme";
 
@@ -21,7 +20,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const seenTutorial = useOnboarding((s) => s.seenTutorial);
-  const [fontsLoaded, fontError] = useFonts(MaterialCommunityIcons.font);
+  const initAudio = useAudioAssets((s) => s.init);
+
+  useEffect(() => {
+    void initAudio();
+  }, [initAudio]);
 
   useEffect(() => {
     void setIsAudioActiveAsync(true);
@@ -33,8 +36,6 @@ export default function App() {
       shouldRouteThroughEarpiece: false,
     });
   }, []);
-
-  if (!fontsLoaded && !fontError) return null;
 
   return (
     <SafeAreaProvider>

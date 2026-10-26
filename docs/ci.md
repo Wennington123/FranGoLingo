@@ -10,8 +10,10 @@ Em push para `main`, PR, ou manual (`workflow_dispatch`):
 2. `npm install`
 3. `npm run typecheck` (bloqueante — falha o build se houver erro de tipo)
 4. `expo prebuild --platform android`
-5. `./gradlew assembleRelease`
-6. Sobe `app-release.apk` como artefato `frangolingo-android-apk`
+5. `./gradlew assembleDebug` ou `assembleRelease`, conforme o input `build_type` do `workflow_dispatch`
+6. Sobe o APK como artefato `frangolingo-android-debug` ou `frangolingo-android-release`
+
+No run manual, o padrão é `debug`. Push/PR continuam buildando `release`.
 
 Baixar o APK: aba **Actions** → run → **Artifacts**.
 

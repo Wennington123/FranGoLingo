@@ -1,5 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { AppIcon } from "../components/AppIcon";
+import { getStory } from "../data/stories";
 import { useProgress } from "../store/progress";
 import { colors, font, radius } from "../theme";
 
@@ -23,7 +24,7 @@ export function ReviewScreen() {
       contentContainerStyle={styles.content}
       renderItem={({ item }) => (
         <View style={styles.card}>
-          <Text style={styles.story}>{item.storyId}</Text>
+          <Text style={styles.story}>{getStory(item.storyId)?.title ?? item.storyId}</Text>
           <Text style={styles.label}>{item.label}</Text>
         </View>
       )}

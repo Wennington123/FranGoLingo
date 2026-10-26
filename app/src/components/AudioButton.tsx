@@ -1,32 +1,37 @@
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useEffect, useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { resolveAudio } from "../data/audio";
+import { useAudioAssets } from "../data/audioAssets";
 import { colors, font, radius } from "../theme";
 import { AppIcon } from "./AppIcon";
 
 type Props = {
-  assetId?: number;
+  audioPath?: string;
   autoPlay?: boolean;
 };
 
-export function AudioButton({ assetId, autoPlay }: Props) {
-  const player = useAudioPlayer(assetId ?? null);
+export function AudioButton({ audioPath, autoPlay }: Props) {
+  const uri = useAudioAssets((s) => (audioPath ? s.uris[audioPath] : undefined));
+  const source = audioPath ? uri ? { uri } : __DEV__ ? resolveAudio(audioPath) ?? null : null : null;
+  const player = useAudioPlayer(source);
   const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
     player.volume = 1;
     player.muted = false;
-  }, [player, assetId]);
-  const playedFor = useRef<number | null>(null);
+  }, [player, source]);
+
+  const playedFor = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!autoPlay || !assetId || !status.isLoaded) return;
-    if (playedFor.current === assetId) return;
-    playedFor.current = assetId;
+    if (!autoPlay || !audioPath || !status.isLoaded) return;
+    if (playedFor.current === audioPath) return;
+    playedFor.current = audioPath;
     player.play();
-  }, [autoPlay, assetId, status.isLoaded, player]);
+  }, [autoPlay, audioPath, status.isLoaded, player]);
 
-  const enabled = assetId !== undefined;
+  const enabled = source !== null;
   const unavailable = enabled && !status.isLoaded;
 
   return (
@@ -45,7 +50,11 @@ export function AudioButton({ assetId, autoPlay }: Props) {
           color={enabled ? colors.blueDark : colors.textFaint}
         />
         <Text style={[styles.label, !enabled && styles.labelDisabled]}>
-          {!enabled ? "Áudio em breve" : unavailable ? "Carregando áudio…" : "Ouvir"}
+          {!audioPath
+            ? "Áudio em breve"
+            : !enabled || unavailable
+              ? "Carregando áudio…"
+              : "Ouvir"}
         </Text>
       </View>
     </Pressable>

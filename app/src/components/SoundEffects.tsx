@@ -1,26 +1,34 @@
-import { createContext, useContext, type PropsWithChildren } from "react";
 import { useAudioPlayer } from "expo-audio";
+import { createContext, useContext, type PropsWithChildren } from "react";
+import { sfxKey, useAudioAssets, type SfxName } from "../data/audioAssets";
 
-const SOURCES = {
+const DEV_SOURCES: Record<SfxName, number> = {
   tap: require("../../assets/sfx/tap.wav"),
   success: require("../../assets/sfx/success.wav"),
   error: require("../../assets/sfx/error.wav"),
   complete: require("../../assets/sfx/complete.wav"),
 };
 
-type SoundName = keyof typeof SOURCES;
-type SoundContextValue = { play: (name: SoundName) => void };
+type SoundContextValue = { play: (name: SfxName) => void };
 
 const SoundContext = createContext<SoundContextValue | null>(null);
 
 export function SoundEffectsProvider({ children }: PropsWithChildren) {
-  const tap = useAudioPlayer(SOURCES.tap);
-  const success = useAudioPlayer(SOURCES.success);
-  const error = useAudioPlayer(SOURCES.error);
-  const complete = useAudioPlayer(SOURCES.complete);
-  const players = { tap, success, error, complete };
+  const uris = useAudioAssets((s) => s.uris);
+  const source = (name: SfxName) => {
+    if (__DEV__) return DEV_SOURCES[name];
+    const uri = uris[sfxKey(name)];
+    return uri ? { uri } : null;
+  };
 
-  const play = (name: SoundName) => {
+  const players = {
+    tap: useAudioPlayer(source("tap")),
+    success: useAudioPlayer(source("success")),
+    error: useAudioPlayer(source("error")),
+    complete: useAudioPlayer(source("complete")),
+  };
+
+  const play = (name: SfxName) => {
     const player = players[name];
     void player.seekTo(0).then(() => player.play());
   };

@@ -47,11 +47,39 @@ npm install
 npx expo start
 ```
 
-Estado atual: leitor interativo funcionando ponta-a-ponta (Fase 1) com 3 histórias FR-A1. A persistência de progresso (Fase 2) ainda é em memória — fechar o app zera XP, corações e conclusões. Áudio TTS só está embutido para `01-au-cafe`; as histórias 02 e 03 ainda não têm `.mp3`. Ver `ROADMAP.md`.
+Estado atual: leitor interativo funcionando ponta-a-ponta (Fase 1) com 3 histórias FR-A1. Ícones e áudio são embutidos nativamente no build: a fonte vai para `assets/fonts` via `expo-font` e os áudios para `res/raw` via `plugins/withAudioAssets.js`, contornando o bug de resolução de assets do `expo-audio` 0.3.x em release. A persistência de progresso (Fase 2) ainda é em memória — fechar o app zera XP, corações e conclusões. Áudio TTS só existe para `01-au-cafe`; as histórias 02 e 03 mostram "Áudio em breve". Ver `ROADMAP.md`.
+
+## Debug local (Android)
+
+Pré-requisitos: JDK 17, Android SDK (platform 35, build-tools 35, NDK 26.1) e um AVD x86_64 com KVM.
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+export QT_QPA_PLATFORM=xcb   # em Wayland, se a janela do emulador não abrir
+
+emulator -avd FranGoLingo -gpu host -memory 2048 -cores 4 &
+cd app
+npx expo run:android
+```
+
+Para builds locais mais rápidos no emulador, compile só a ABI x86_64:
+
+```bash
+cd app/android
+./gradlew assembleDebug -PreactNativeArchitectures=x86_64
+```
+
+O APK de debug não embute o bundle JS: mantenha o Metro (`npx expo start`) rodando. O APK de release é standalone e é o que o CI gera por padrão.
 
 ## Build do APK (CI)
 
-Push em `main` (ou Actions → run manual) builda o APK no GitHub Actions e sobe como artefato. Ver `docs/ci.md`.
+Push em `main` ou PR builda o APK release. Em Actions → run manual (`workflow_dispatch`) dá para escolher `debug` ou `release`; o artefato sai como `frangolingo-android-<tipo>`. Ver `docs/ci.md`.
+
+## Referências de conteúdo
+
+- **Avangardix** (curso FR para brasileiros): `docs/reference/avangardix.md` — referência metodológica; não copiar exercícios/diálogos.
+- **Decks Anki FR–PT-BR**: usados só como referência de estrutura/vocabulário. A maioria não declara licença e o áudio costuma vir de TTS/Forvo, então não redistribuímos esses assets. Ver `docs/content-sources.md`.
 
 ## Licença
 

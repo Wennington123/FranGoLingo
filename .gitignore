@@ -15,6 +15,10 @@ dist/
 web-build/
 *.log
 
+# Expo prebuild (CNG)
+/app/android/
+/app/ios/
+
 # Env
 .env
 .env.local
